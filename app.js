@@ -1,11 +1,13 @@
 const express = require('express');
-const apiRoutes = require('./routes/api');
+const apiRoutes = require('./server/routes/routes');
+const clientRoutes = require('./client/routes/routes');
 
 const app = express();
 app.set('view engine', 'ejs');
-app.use('/assets', express.static('assets'));
+app.use('/public', express.static('public'));
 
 app.use('/api', apiRoutes);
+app.use('/', clientRoutes);
 
 app.listen(3000, e => {
   if (e) { throw e }
