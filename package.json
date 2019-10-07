@@ -18,10 +18,16 @@
   },
   "homepage": "https://github.com/middisp/convo#readme",
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^4.12.0",
     "nodemon": "^1.19.3"
   },
   "dependencies": {
     "express": "^4.17.1",
+    "mongodb": "^3.3.2",
     "node-fetch": "^2.6.0"
   }
 }

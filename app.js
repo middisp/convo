@@ -1,13 +1,19 @@
 const express = require('express');
-const apiRoutes = require('./routes/api');
+const messagesRoutes = require('./server/routes/message');
+
+// DB
+const mongoConnect = require('./server/utils/database').mongoConnect;
 
 const app = express();
 app.set('view engine', 'ejs');
-app.use('/assets', express.static('assets'));
+app.use('/public', express.static('public'));
 
-app.use('/api', apiRoutes);
+app.use('/messages', messagesRoutes);
+//app.use('/', clientRoutes);
 
-app.listen(3000, e => {
-  if (e) { throw e }
-  console.log('Server running on port 3000');
+mongoConnect(() => {
+  app.listen(3000, e => {
+    if (e) { throw e }
+    console.log('Server running on port 3000');
+  });
 });
