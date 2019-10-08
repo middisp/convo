@@ -1,19 +1,19 @@
 const getDb = require('../utils/database').getDb;
-const { MESSAGE_COLLECTION } = require('../config');
+const { USER_COLLECTION } = require('../config');
 
 let db;
 
-class Message {
-  constructor(content, senderId, channelId) {
-    this.content = content;
-    this.senderId = senderId;
-    this.channelId = channelId;
+class User {
+  constructor(name, email, password) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
   }
 
   save() {
     db = getDb();
 
-    return db.collection(MESSAGE_COLLECTION)
+    return db.collection(USER_COLLECTION)
       .insertOne(this)
       .then(result => {
         console.log(result);
@@ -26,7 +26,7 @@ class Message {
   static fetchAll(channelId) {
     db = getDb();
 
-    return db.collection(MESSAGE_COLLECTION)
+    return db.collection(USER_COLLECTION)
       .find({ channelId: channelId })
       .toArray()
       .then(messages => {
@@ -37,13 +37,14 @@ class Message {
       });
   }
 
-  static updateMessage(messageId, properties = {}) {
-    return true
-  }
-
-  static deleteMessage(messageId) {
+  static updateUser(userId, properties = {}) {
     return true;
   }
+
+  static deleteUser(userId) {
+    return true;
+  }
+
 }
 
-module.exports = Message;
+module.exports = User;

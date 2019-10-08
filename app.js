@@ -1,15 +1,22 @@
 const express = require('express');
-const messagesRoutes = require('./server/routes/message');
 
-// DB
+const messageRoutes = require('./server/routes/message');
+const channelRoutes = require('./server/routes/channel');
+const userRoutes = require('./server/routes/user');
 const mongoConnect = require('./server/utils/database').mongoConnect;
 
-const app = express();
-app.set('view engine', 'ejs');
-app.use('/public', express.static('public'));
+const errorController = require('./server/controllers/error');
 
-app.use('/messages', messagesRoutes);
-//app.use('/', clientRoutes);
+const app = express();
+
+app.set('view engine', 'ejs');
+
+app.use('/public', express.static('public'));
+app.use('/message', messageRoutes);
+app.use('/channel', channelRoutes);
+app.use('/user', userRoutes);
+
+app.use(errorController.get404);
 
 mongoConnect(() => {
   app.listen(3000, e => {
