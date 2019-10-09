@@ -42,7 +42,7 @@ exports.putUpdateUser = (req, res, next) => {
 		});
 }
 
-exports.deleteMessage = (req, res, next) => {
+exports.deleteUser = (req, res, next) => {
 	const userId = req.body.userId;
 
 	User.deleteUser(userId)
