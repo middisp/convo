@@ -1,15 +1,16 @@
 const express = require('express');
 
-const messageRoutes = require('./server/routes/message');
-const channelRoutes = require('./server/routes/channel');
-const userRoutes = require('./server/routes/user');
-const mongoConnect = require('./server/utils/database').mongoConnect;
+const messageRoutes = require('./routes/message');
+const channelRoutes = require('./routes/channel');
+const userRoutes = require('./routes/user');
+const mongoConnect = require('./utils/database').mongoConnect;
 
-const errorController = require('./server/controllers/error');
+const errorController = require('./controllers/error');
 
 const app = express();
 
 app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 app.use('/public', express.static('public'));
 app.use('/message', messageRoutes);
