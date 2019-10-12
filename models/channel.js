@@ -17,9 +17,6 @@ class Channel {
       .then(result => {
         return result;
       })
-      .then(result => {
-
-      })
       .catch(err => {
         console.log(`Error: ${err}`);
         throw err;
@@ -32,8 +29,8 @@ class Channel {
     return db.collection(CHANNEL_COLLECTION)
       .find({ user_id: user_id })
       .toArray()
-      .then(messages => {
-        return messages;
+      .then(channels => {
+        return channels;
       }).catch(err => {
         console.log(`Error: ${err}`);
         throw err;
