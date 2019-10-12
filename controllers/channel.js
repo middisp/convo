@@ -1,12 +1,14 @@
 const Channel = require('../models/channel');
+const User = require('../models/user');
 
 exports.postAddChannel = (req, res, next) => {
   const name = req.body.name;
-  const userId = req.body.userId;
+  const user_id = req.body.user_id;
 
-  const message = new Channel(name, userId);
+  const message = new Channel(name, user_id);
   message.save()
-    .then(result => res.send(result))
+    .then(result => User.updateUser(user_id, { channel_id: result._id }))
+    .then(result => result)
     .catch(err => {
       console.log(`Error: ${err}`);
       throw err;
@@ -14,9 +16,9 @@ exports.postAddChannel = (req, res, next) => {
 }
 
 exports.getAllChannels = (req, res, next) => {
-  const userId = req.params.userId;
+  const user_id = req.params.userId;
 
-  Channel.fetchAll(userId)
+  Channel.fetchAll(user_id)
     .then(channels => {
       res.render({
         channels: channels
@@ -29,9 +31,9 @@ exports.getAllChannels = (req, res, next) => {
 }
 
 exports.putUpdateChannel = (req, res, next) => {
-  const channelId = req.body.channelId;
+  const channel_id = req.body.channel_id;
 
-  Channel.updateChannel(channelId)
+  Channel.updateChannel(channel_id)
     .then(() => {
       res.render()
     })
@@ -42,9 +44,9 @@ exports.putUpdateChannel = (req, res, next) => {
 }
 
 exports.deleteChannel = (req, res, next) => {
-  const channelId = req.body.channelId;
+  const channel_id = req.body.channel_id;
 
-  Channel.deleteChannel(channelId)
+  Channel.deleteChannel(channel_id)
     .then(() => {
       res.render()
     })

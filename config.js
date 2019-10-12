@@ -1,7 +1,7 @@
 const config = {
-  MESSAGE_COLLECTION: 'messages',
-  CHANNEL_COLLECTION: 'channels',
-  USER_COLLECTION: 'users'
+  MESSAGE_COLLECTION: 'message',
+  CHANNEL_COLLECTION: 'channel',
+  USER_COLLECTION: 'user'
 }
 
 module.exports = config;

@@ -1,0 +1,11 @@
+<%- include('partials/documentHead.ejs') %>
+
+<body>
+  <h1>User</h1>
+  <% if (user) { %>
+  <p><%= user.name %></p>
+  <p><%= user.email %></p>
+  <% } %>
+</body>
+
+</html>

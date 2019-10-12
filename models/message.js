@@ -4,10 +4,10 @@ const { MESSAGE_COLLECTION } = require('../config');
 let db;
 
 class Message {
-  constructor(content, senderId, channelId) {
+  constructor(content, user_id, channel_id) {
     this.content = content;
-    this.senderId = senderId;
-    this.channelId = channelId;
+    this.user_id = user_id;
+    this.channel_id = channel_id;
   }
 
   save() {
@@ -16,32 +16,32 @@ class Message {
     return db.collection(MESSAGE_COLLECTION)
       .insertOne(this)
       .then(result => {
-        console.log(result);
+        return result;
       }).catch(err => {
         console.log(`Error: ${err}`);
         throw err;
       });
   }
 
-  static fetchAll(channelId) {
+  static fetchAll(channel_id) {
     db = getDb();
 
     return db.collection(MESSAGE_COLLECTION)
-      .find({ channelId: channelId })
+      .find({ channel_id: channel_id })
       .toArray()
       .then(messages => {
-        console.log(messages);
+        return messages;
       }).catch(err => {
         console.log(`Error: ${err}`);
         throw err;
       });
   }
 
-  static updateMessage(messageId, properties = {}) {
+  static updateMessage(message_id, properties = {}) {
     return true
   }
 
-  static deleteMessage(messageId) {
+  static deleteMessage(message_id) {
     return true;
   }
 }

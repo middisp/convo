@@ -17,6 +17,12 @@ app.use('/message', messageRoutes);
 app.use('/channel', channelRoutes);
 app.use('/user', userRoutes);
 
+app.use('/', (req, res, next) => {
+  res.render('index', {
+    pageTitle: 'Welcome!'
+  })
+});
+
 app.use(errorController.get404);
 
 mongoConnect(() => {
