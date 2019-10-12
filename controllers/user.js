@@ -6,18 +6,33 @@ exports.postAddUser = (req, res, next) => {
 	const password = req.body.password;
 
 	const user = new User(name, email, password);
-	message.save()
+	user.save()
 		.then(result => res.send(result))
 		.catch(err => {
 			console.log(`Error: ${err}`);
 			throw err;
 		});
-}
+};
+
+exports.getUser = (req, res, next) => {
+	const id = req.params.id;
+
+	User.getUser(id)
+		.then(user => {
+			const data = { pageTitle: 'User', user: user }
+			console.log(data);
+			res.render('user', data);
+		})
+		.catch(err => {
+			console.log(`Error: ${err}`);
+			throw err;
+		})
+};
 
 exports.getAllUsers = (req, res, next) => {
-	const channelId = req.params.channelId;
+	const channel_id = req.params.channel_id;
 
-	user.fetchAll(channelId)
+	User.fetchAll(channel_id)
 		.then(users => {
 			res.render({
 				users: users
@@ -27,12 +42,12 @@ exports.getAllUsers = (req, res, next) => {
 			console.log(`Error: ${err}`);
 			throw err;
 		});
-}
+};
 
 exports.putUpdateUser = (req, res, next) => {
-	const userId = req.body.userId;
+	const id = req.body.user_id;
 
-	User.updateUser(userId)
+	User.updateUser(id)
 		.then(() => {
 			res.render()
 		})
@@ -43,9 +58,9 @@ exports.putUpdateUser = (req, res, next) => {
 }
 
 exports.deleteUser = (req, res, next) => {
-	const userId = req.body.userId;
+	const id = req.body.user_id;
 
-	User.deleteUser(userId)
+	User.deleteUser(id)
 		.then(() => {
 			res.render()
 		})

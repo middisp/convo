@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/add', urlencodedParser, controllers.postAddChannel);
 
-router.get('/get/:userId', controllers.getAllChannels);
+router.get('/get/:user_id', controllers.getAllChannels);
 
 router.put('/update', controllers.putUpdateChannel);
 

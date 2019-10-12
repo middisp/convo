@@ -2,10 +2,10 @@ const Message = require('../models/message');
 
 exports.postAddMessage = (req, res, next) => {
 	const content = req.body.content;
-	const senderId = req.body.senderId;
-	const channelId = req.body.channelId;
+	const user_id = req.body.user_id;
+	const channel_id = req.body.channel_id;
 
-	const message = new Message(content, senderId, channelId);
+	const message = new Message(content, user_id, channel_id);
 	message.save()
 		.then(result => res.send(result))
 		.catch(err => {
@@ -15,9 +15,9 @@ exports.postAddMessage = (req, res, next) => {
 }
 
 exports.getAllMessages = (req, res, next) => {
-	const channelId = req.params.channelId;
+	const channel_id = req.params.channel_id;
 
-	Message.fetchAll(channelId)
+	Message.fetchAll(channel_id)
 		.then(messages => {
 			res.render({
 				messages: messages
@@ -30,9 +30,9 @@ exports.getAllMessages = (req, res, next) => {
 }
 
 exports.putUpdateMessage = (req, res, next) => {
-	const messageId = req.body.messageId;
+	const message_id = req.body.message_id;
 
-	Message.updateMessage(messageId)
+	Message.updateMessage(message_id)
 		.then(() => {
 			res.render()
 		})
@@ -43,9 +43,9 @@ exports.putUpdateMessage = (req, res, next) => {
 }
 
 exports.deleteMessage = (req, res, next) => {
-	const messageId = req.body.messageId;
+	const message_id = req.body.message_id;
 
-	Message.deleteMessage(messageId)
+	Message.deleteMessage(message_id)
 		.then(() => {
 			res.render()
 		})

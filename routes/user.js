@@ -6,9 +6,11 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const router = express.Router();
 
+router.get('/:id', controllers.getUser);
+
 router.post('/add', urlencodedParser, controllers.postAddUser);
 
-router.get('/get/:channelId', controllers.getAllUsers);
+router.get('/get/:channel_id', controllers.getAllUsers);
 
 router.put('/update', controllers.postAddUser);
 

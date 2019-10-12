@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/add', urlencodedParser, controllers.postAddMessage);
 
-router.get('/get/:channelId', controllers.getAllMessages);
+router.get('/get/:channel_id', controllers.getAllMessages);
 
 router.put('/update', controllers.putUpdateMessage);
 

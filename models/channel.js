@@ -4,9 +4,9 @@ const { CHANNEL_COLLECTION } = require('../config');
 let db;
 
 class Channel {
-  constructor(name, userId) {
+  constructor(name, user_id) {
     this.name = name;
-    this.userId = userId;
+    this.user_id = user_id;
   }
 
   save() {
@@ -15,8 +15,12 @@ class Channel {
     return db.collection(CHANNEL_COLLECTION)
       .insertOne(this)
       .then(result => {
-        console.log(result);
-      }).catch(err => {
+        return result;
+      })
+      .then(result => {
+
+      })
+      .catch(err => {
         console.log(`Error: ${err}`);
         throw err;
       });
@@ -26,21 +30,21 @@ class Channel {
     db = getDb();
 
     return db.collection(CHANNEL_COLLECTION)
-      .find({ userId: userId })
+      .find({ user_id: user_id })
       .toArray()
       .then(messages => {
-        console.log(messages);
+        return messages;
       }).catch(err => {
         console.log(`Error: ${err}`);
         throw err;
       });
   }
 
-  static updateChannel(channelId, propeties = {}) {
+  static updateChannel(channel_id, propeties = {}) {
     return true;
   }
 
-  static deleteChannel(channelId) {
+  static deleteChannel(channel_id) {
     return true;
   }
 }
