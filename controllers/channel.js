@@ -1,18 +1,29 @@
+const ObjectId = require('mongodb').ObjectId;
 const Channel = require('../models/channel');
 const User = require('../models/user');
 
 exports.postAddChannel = (req, res, next) => {
   const name = req.body.name;
-  const user_id = req.body.user_id;
+  const user_id = new ObjectId(req.body.user_id);
+  const channel = new Channel(name, user_id);
 
-  const message = new Channel(name, user_id);
-  message.save()
-    .then(result => User.updateUser(user_id, { channel_id: result._id }))
-    .then(result => result)
+  channel.save()
+    .then(result => {
+      User.updateUser(user_id, { channels: result.insertedId });
+      return 'Success';
+    })
+    .then(result => {
+      console.log('result: ', result);
+      res.render('channel', { pageTitle: 'success', userInfo: result });
+    })
     .catch(err => {
       console.log(`Error: ${err}`);
       throw err;
     });
+}
+
+exports.getAddChannel = (req, res, next) => {
+  res.render('channel', { pageTitle: 'Channel' });
 }
 
 exports.getAllChannels = (req, res, next) => {

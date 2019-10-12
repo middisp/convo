@@ -14,4 +14,6 @@ router.put('/update', controllers.putUpdateChannel);
 
 router.delete('/delete', controllers.deleteChannel);
 
+router.get('/', controllers.getAddChannel);
+
 module.exports = router;

@@ -1,5 +1,5 @@
-const getDb = require('../utils/database').getDb;
 const ObjectId = require('mongodb').ObjectId;
+const getDb = require('../utils/database').getDb;
 const { USER_COLLECTION } = require('../config');
 
 let db;
@@ -17,6 +17,7 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.channels = [];
   }
 
   save() {
