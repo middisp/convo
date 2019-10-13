@@ -5,8 +5,13 @@ let db;
 
 class Channel {
   constructor(name, user_id) {
+    const date = new Date();
     this.name = name;
     this.user_id = user_id;
+    this.meta = {
+      createdAt: date,
+      modifiedAt: date
+    }
   }
 
   save() {

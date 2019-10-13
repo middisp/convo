@@ -5,9 +5,14 @@ let db;
 
 class Message {
   constructor(content, user_id, channel_id) {
+    const date = new Date();
     this.content = content;
     this.user_id = user_id;
     this.channel_id = channel_id;
+    this.meta = {
+      createdAt: date,
+      modifiedAt: date
+    }
   }
 
   save() {
