@@ -5,19 +5,30 @@ const { USER_COLLECTION } = require('../config');
 let db;
 
 const findOperation = (properties) => {
+  const date = new Date();
   if (properties.channel_id) {
-    return { $push: { channels: properties._id } }
+    return {
+      $push: { channels: properties._id },
+      $set: { 'meta.modifiedAt': date }
+    }
   }
 
-  return ({ $set: { ...properties } })
+  return ({
+    $set: { ...properties, 'meta.ModifiedAt': date }
+  })
 }
 
 class User {
   constructor(name, email, password) {
+    const date = new Date();
     this.name = name;
     this.email = email;
     this.password = password;
     this.channels = [];
+    this.meta = {
+      createdAt: date,
+      modifiedAt: date,
+    }
   }
 
   save() {
