@@ -24,7 +24,7 @@ class Message {
         return result;
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 
@@ -38,7 +38,7 @@ class Message {
         return messages;
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 

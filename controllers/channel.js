@@ -6,7 +6,7 @@ const User = require('../models/user');
 exports.postAddChannel = (req, res, next) => {
   const name = req.body.name || undefined;
   const members = req.body.members || undefined;
-  const user_id = req.body.user ? new ObjectId(req.body.user_id) : undefined;
+  const user_id = new ObjectId(req.params.user_id);
 
   if (name && user_id) {
     const channel = new Channel(name, user_id);
@@ -17,24 +17,14 @@ exports.postAddChannel = (req, res, next) => {
         return userMessages.postAddChannel.success;
       })
       .then(result => {
-        res.render('channel', { pageTitle: 'success', userInfo: result });
+        res.status(201).json({ pageTitle: 'success', userInfo: result });
       })
       .catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        res.status(201).json({ pageTitle: 'success', userInfo: err });
       });
   } else {
-    let: userMessage;
-    if (!name) {
-      if (!members) {
-        userMessage = userMessages.postAddChannel.emptyFields;
-      }
-      userMessage = userMessages.postAddChannel.nameMissing;
-    } else if (!members) {
-      userMessage = userMessages.postAddChannel.membersMissing;
-    }
-
-    return res.render('channel', { pageTitle, userInfo: userMessage });
+    return res.status(422).json('channel', { pageTitle, message: 'Error' });
 
   }
 }
@@ -48,7 +38,7 @@ exports.getAllChannels = (req, res, next) => {
 
   Channel.fetchAll(user_id)
     .then(channels => {
-      res.render({
+      res.status(200).json({
         channels: channels
       })
     })

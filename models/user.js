@@ -40,7 +40,7 @@ class User {
         return result;
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 
@@ -54,7 +54,7 @@ class User {
         return user;
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 
@@ -68,7 +68,7 @@ class User {
         return users;
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 
@@ -84,7 +84,7 @@ class User {
         return user
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       })
   }
 

@@ -7,7 +7,7 @@ exports.postAddUser = (req, res, next) => {
 
 	const user = new User(name, email, password);
 	user.save()
-		.then(result => res.send(result))
+		.then(result => res.status(201).json({ result }))
 		.catch(err => {
 			console.log(`Error: ${err}`);
 			throw err;
@@ -19,9 +19,7 @@ exports.getUser = (req, res, next) => {
 
 	User.getUser(id)
 		.then(user => {
-			const data = { pageTitle: 'User', user: user }
-			console.log(data);
-			res.render('user', data);
+			res.status(200).json({ pageTitle: 'User', user: user });
 		})
 		.catch(err => {
 			console.log(`Error: ${err}`);
@@ -34,7 +32,7 @@ exports.getAllUsers = (req, res, next) => {
 
 	User.fetchAll(channel_id)
 		.then(users => {
-			res.render({
+			res.status(200).json({
 				users: users
 			})
 		})

@@ -7,7 +7,7 @@ exports.postAddMessage = (req, res, next) => {
 
 	const message = new Message(content, user_id, channel_id);
 	message.save()
-		.then(result => res.send(result))
+		.then(result => res.status(201).json({ result }))
 		.catch(err => {
 			console.log(`Error: ${err}`);
 			throw err;
@@ -19,7 +19,7 @@ exports.getAllMessages = (req, res, next) => {
 
 	Message.fetchAll(channel_id)
 		.then(messages => {
-			res.render({
+			res.status(200).json({
 				messages: messages
 			})
 		})

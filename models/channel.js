@@ -24,7 +24,7 @@ class Channel {
       })
       .catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 
@@ -38,7 +38,7 @@ class Channel {
         return channels;
       }).catch(err => {
         console.log(`Error: ${err}`);
-        throw err;
+        next(new Error(err));
       });
   }
 
