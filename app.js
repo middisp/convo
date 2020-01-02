@@ -34,7 +34,9 @@ app.use('/', (req, res, next) => {
 app.use(errorController.get404);
 
 app.use((error, req, res, next) => {
-  res.status(500).render('500', { pageTitle: '500: An error occurred' });
+  const statusCode = error.statusCode || 500;
+  const message = error.message;
+  res.status(statusCode).json({ message });
 })
 
 mongoConnect(() => {
