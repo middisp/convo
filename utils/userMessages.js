@@ -1,4 +1,7 @@
 const userMessages = {
+  generic: {
+    validationFailed: 'Validation failed'
+  },
   postAddChannel: {
     success: 'Channel created!',
     error: 'Server error, please try again',
