@@ -4,11 +4,12 @@ const { MESSAGE_COLLECTION } = require('../config');
 let db;
 
 class Message {
-  constructor(content, user_id, channel_id) {
+  constructor(content, sender_id, recipient_id) {
     const date = new Date();
     this.content = content;
-    this.user_id = user_id;
-    this.channel_id = channel_id;
+    this.sender_id = sender_id;
+    this.recipient_id = recipient_id;
+    this.edited = false;
     this.meta = {
       createdAt: date,
       modifiedAt: date
@@ -21,21 +22,21 @@ class Message {
     return db.collection(MESSAGE_COLLECTION)
       .insertOne(this)
       .then(result => {
-        return result;
+        return result.ops[0];
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
       });
   }
 
-  static fetchAll(channel_id) {
+  static fetchAll(sender_id, recipient_id) {
     db = getDb();
 
     return db.collection(MESSAGE_COLLECTION)
-      .find({ channel_id: channel_id })
+      .find({ sender_id, recipient_id })
       .toArray()
-      .then(messages => {
-        return messages;
+      .then(result => {
+        return result;
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));

@@ -15,10 +15,6 @@ router.post('/add', urlencodedParser, [
   body('password').trim().notEmpty().isLength({ min: 5 })
 ], controllers.postAddUser);
 
-router.get('/get/:channel_id', controllers.getAllUsers);
-
 router.put('/update/:user_id', urlencodedParser, controllers.putUpdateUser);
-
-router.delete('/delete', controllers.deleteUser);
 
 module.exports = router;

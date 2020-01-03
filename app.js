@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 
 const messageRoutes = require('./routes/message');
-const channelRoutes = require('./routes/channel');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const mongoConnect = require('./utils/database').mongoConnect;
@@ -20,7 +19,6 @@ app.use(
 
 app.use('/public', express.static('public'));
 app.use('/message', messageRoutes);
-app.use('/channel', channelRoutes);
 app.use('/user', userRoutes);
 
 app.use('/login', authRoutes);

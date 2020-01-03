@@ -30,13 +30,13 @@ exports.getUser = (req, res, next) => {
 	const id = req.params.id;
 
 	User.getUser(id)
-		.then(user => {
-			res.status(200).json(user);
+		.then(result => {
+			res.status(200).json(result);
 		})
 		.catch(err => {
-			console.log(`Error: ${err}`);
-			throw err;
-		})
+			const error = new Error('Error fetching user');
+			throw error;
+		});
 };
 
 exports.getAllUsers = (req, res, next) => {
@@ -47,8 +47,8 @@ exports.getAllUsers = (req, res, next) => {
 			res.status(200).json(users)
 		})
 		.catch(err => {
-			console.log(`Error: ${err}`);
-			throw err;
+			const error = new Error('Error fetching users');
+			throw error;
 		});
 };
 
@@ -70,18 +70,5 @@ exports.putUpdateUser = (req, res, next) => {
 			const error = new Error('Error updating user');
 			error.statusCode = 422;
 			throw error;
-		});
-}
-
-exports.deleteUser = (req, res, next) => {
-	const id = req.body.user_id;
-
-	User.deleteUser(id)
-		.then(() => {
-			res.render()
-		})
-		.catch(err => {
-			console.log(`Error: ${err}`);
-			throw err;
 		});
 }
