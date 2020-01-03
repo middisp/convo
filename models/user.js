@@ -10,7 +10,6 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.channels = [];
     this.preferences = {}
     this.meta = {
       createdAt: date,
@@ -24,7 +23,7 @@ class User {
     return db.collection(USER_COLLECTION)
       .insertOne(this)
       .then(result => {
-        return result;
+        return result.ops[0];
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
@@ -37,8 +36,8 @@ class User {
 
     return db.collection(USER_COLLECTION)
       .findOne({ _id: o_id })
-      .then(user => {
-        return user;
+      .then(result => {
+        return result.ops[0];
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
@@ -51,8 +50,8 @@ class User {
     return db.collection(USER_COLLECTION)
       .find({ channel_id: channel_id })
       .toArray()
-      .then(users => {
-        return users;
+      .then(result => {
+        return result.ops;
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));

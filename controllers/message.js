@@ -6,34 +6,31 @@ const userMessages = require('../utils/userMessages');
 exports.postAddMessage = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		console.log(errors);
 		const error = new Error(userMessages.generic.validationFailed);
 		error.statusCode = 422;
 		throw error;
 	}
 	const content = req.body.content;
 	const user_id = req.body.user_id;
-	const channel_id = req.body.channel_id;
+	const recipient_id = req.body.recipient_id;
 
-	const message = new Message(content, user_id, channel_id);
+	const message = new Message(content, user_id, recipient_id);
 	message.save()
-		.then(result => res.status(201).json({ result }))
+		.then(result => res.status(201).json(result))
 		.catch(err => {
-			console.log(`Error: ${err}`)
 			const error = new Error('Error posting new message');
 			error.statusCode = 422;
 			next(error);
 		});
 }
 
-exports.getAllMessages = (req, res, next) => {
-	const channel_id = req.params.channel_id;
+exports.getMessagesByConvo = (req, res, next) => {
+	const sender_id = req.body.sender_id;
+	const recipient_id = req.params.recipient_id;
 
-	Message.fetchAll(channel_id)
-		.then(messages => {
-			res.status(200).json({
-				messages: messages
-			})
+	Message.fetchAll(sender_id, recipient_id)
+		.then(result => {
+			res.status(200).json(result)
 		})
 		.catch(err => {
 			console.log(`Error: ${err}`);
