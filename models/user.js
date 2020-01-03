@@ -4,20 +4,6 @@ const { USER_COLLECTION } = require('../config');
 
 let db;
 
-const findOperation = (properties) => {
-  const date = new Date();
-  if (properties.channel_id) {
-    return {
-      $push: { channels: properties._id },
-      $set: { 'meta.modifiedAt': date }
-    }
-  }
-
-  return ({
-    $set: { ...properties, 'meta.ModifiedAt': date }
-  })
-}
-
 class User {
   constructor(name, email, password) {
     const date = new Date();
@@ -25,6 +11,7 @@ class User {
     this.email = email;
     this.password = password;
     this.channels = [];
+    this.preferences = {}
     this.meta = {
       createdAt: date,
       modifiedAt: date,
@@ -72,14 +59,15 @@ class User {
       });
   }
 
-  static updateUser(id, properties = {}) {
+  static updateUser(id, user) {
     const o_id = new ObjectId(id);
+    const date = new Date();
     db = getDb();
 
-    const operation = findOperation(properties);
+    console.log(o_id, user);
 
     return db.collection(USER_COLLECTION)
-      .updateOne({ _id: o_id }, operation)
+      .updateOne({ _id: o_id }, { $set: { ...user, meta: { modifiedAt: date } } })
       .then(user => {
         return user
       }).catch(err => {
