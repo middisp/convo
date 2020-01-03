@@ -18,7 +18,7 @@ exports.postAddUser = (req, res, next) => {
 
 	const user = new User(name, email, password);
 	user.save()
-		.then(result => res.status(201).json({ result }))
+		.then(result => res.status(201).json(result))
 		.catch(err => {
 			const error = new Error('Error creating user');
 			error.statusCode = 422;
@@ -31,7 +31,7 @@ exports.getUser = (req, res, next) => {
 
 	User.getUser(id)
 		.then(user => {
-			res.status(200).json({ pageTitle: 'User', user: user });
+			res.status(200).json(user);
 		})
 		.catch(err => {
 			console.log(`Error: ${err}`);
@@ -44,9 +44,7 @@ exports.getAllUsers = (req, res, next) => {
 
 	User.fetchAll(channel_id)
 		.then(users => {
-			res.status(200).json({
-				users: users
-			})
+			res.status(200).json(users)
 		})
 		.catch(err => {
 			console.log(`Error: ${err}`);
@@ -55,15 +53,23 @@ exports.getAllUsers = (req, res, next) => {
 };
 
 exports.putUpdateUser = (req, res, next) => {
-	const id = req.body.user_id;
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log(errors);
+		const error = new Error(userMessages.generic.validationFailed);
+		error.statusCode = 422;
+		throw error;
+	}
+	const id = req.params.user_id;
 
-	User.updateUser(id)
-		.then(() => {
-			res.render()
+	User.updateUser(id, { name: 'Pete Middis' })
+		.then((user) => {
+			res.status(200).json(user);
 		})
 		.catch(err => {
-			console.log(`Error: ${err}`);
-			throw err;
+			const error = new Error('Error updating user');
+			error.statusCode = 422;
+			throw error;
 		});
 }
 

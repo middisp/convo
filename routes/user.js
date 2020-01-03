@@ -10,14 +10,14 @@ const router = express.Router();
 router.get('/:id', controllers.getUser);
 
 router.post('/add', urlencodedParser, [
-  body('name').trim().isEmpty(),
-  body('email').trim().isEmail(),
-  body('password').trim().isLength({ min: 5 })
+  body('name').trim().notEmpty().isString(),
+  body('email').trim().notEmpty().isEmail(),
+  body('password').trim().notEmpty().isLength({ min: 5 })
 ], controllers.postAddUser);
 
 router.get('/get/:channel_id', controllers.getAllUsers);
 
-router.put('/update', controllers.postAddUser);
+router.put('/update/:user_id', urlencodedParser, controllers.putUpdateUser);
 
 router.delete('/delete', controllers.deleteUser);
 
