@@ -1,6 +1,6 @@
 const config = {
   MESSAGE_COLLECTION: 'message',
-  CHANNEL_COLLECTION: 'channel',
+  THREAD_COLLECTION: 'thread',
   USER_COLLECTION: 'user'
 }
 

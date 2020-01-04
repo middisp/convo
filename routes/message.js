@@ -11,10 +11,10 @@ const router = express.Router();
 router.post('/add', urlencodedParser, [
   body('content').trim().notEmpty(),
   body('user_id').trim().notEmpty(),
-  body('recipient_id').trim().notEmpty()
+  body('thread_id').trim().notEmpty()
 ], controllers.postAddMessage);
 
-router.get('/:recipient_id', urlencodedParser, controllers.getMessagesByConvo);
+router.get('/:thread_id', urlencodedParser, controllers.getMessagesByThread);
 
 router.put('/update', controllers.putUpdateMessage);
 
