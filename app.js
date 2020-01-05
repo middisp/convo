@@ -17,17 +17,17 @@ app.use(
   session({ secret: 'my secret', resave: false, saveUninitialized: false })
 );
 
+app.use('/login', authRoutes);
 app.use('/public', express.static('public'));
 app.use('/message', messageRoutes);
 app.use('/user', userRoutes);
 
-app.use('/login', authRoutes);
 
-app.use('/', (req, res, next) => {
-  res.render('index', {
-    pageTitle: 'Welcome!'
-  })
-});
+// app.use('/', (req, res, next) => {
+//   res.render('index', {
+//     pageTitle: 'Welcome!'
+//   })
+// });
 
 app.use(errorController.get404);
 
