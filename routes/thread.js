@@ -15,7 +15,9 @@ router.post('/add', urlencodedParser, [
 
 router.get('/:user_id', urlencodedParser, controllers.getThreads);
 
-// router.put('/update', controllers.putUpdateMessage);
+router.put('/update', [
+  body('members').trim().notEmpty()
+], controllers.putUpdateThread);
 
 // router.delete('/delete', controllers.deleteMessage);
 

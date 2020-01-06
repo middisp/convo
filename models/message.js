@@ -46,8 +46,19 @@ class Message {
       });
   }
 
-  static updateMessage(message_id, properties = {}) {
-    return true
+  static updateMessage(message_id, message) {
+    const o_id = new ObjectId(message_id);
+    const date = new Date();
+    db = getDb();
+
+    return db.collection(MESSAGE_COLLECTION)
+      .updateOne({ _id: o_id }, { $set: { ...message, meta: { modifiedAt: date } } })
+      .then(result => {
+        return result
+      }).catch(err => {
+        console.log(`Error: ${err}`);
+        next(new Error(err));
+      })
   }
 
   static deleteMessage(message_id) {
