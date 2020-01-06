@@ -1,21 +1,21 @@
 const { validationResult } = require('express-validator');
-const Message = require('../models/message');
+const Thread = require('../models/thread');
 
 const userMessages = require('../utils/userMessages');
 
-exports.postAddMessage = (req, res, next) => {
+exports.postAddThread = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
+		console.log(errors);
 		const error = new Error(userMessages.generic.validationFailed);
 		error.statusCode = 422;
 		throw error;
 	}
-	const content = req.body.content;
+	const members = req.body.members;
 	const user_id = req.body.user_id;
-	const thread_id = req.body.thread_id;
 
-	const message = new Message(content, user_id, thread_id);
-	message.save()
+	const thread = new Thread(user_id, members);
+	thread.save()
 		.then(result => res.status(201).json(result))
 		.catch(err => {
 			const error = new Error('Error posting new message');
@@ -24,10 +24,11 @@ exports.postAddMessage = (req, res, next) => {
 		});
 }
 
-exports.getMessagesByThread = (req, res, next) => {
-	const thread_id = req.params.thread_id;
+exports.getThreads = (req, res, next) => {
+	const sender_id = req.body.sender_id;
+	const recipient_id = req.params.recipient_id;
 
-	Message.fetchAll(thread_id)
+	Message.fetchAll(sender_id, recipient_id)
 		.then(result => {
 			res.status(200).json(result)
 		})
@@ -37,10 +38,10 @@ exports.getMessagesByThread = (req, res, next) => {
 		});
 }
 
-exports.putUpdateMessage = (req, res, next) => {
-	const message_id = req.body.message_id;
+exports.putUpdateThread = (req, res, next) => {
+	const thread_id = req.body.message_id;
 
-	Message.updateMessage(message_id)
+	Thread.updateThread(thread_id)
 		.then(() => {
 			res.render()
 		})

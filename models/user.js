@@ -10,7 +10,8 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.preferences = {}
+    this.preferences = {};
+    this.threads = [];
     this.meta = {
       createdAt: date,
       modifiedAt: date,
@@ -63,12 +64,10 @@ class User {
     const date = new Date();
     db = getDb();
 
-    console.log(o_id, user);
-
     return db.collection(USER_COLLECTION)
       .updateOne({ _id: o_id }, { $set: { ...user, meta: { modifiedAt: date } } })
-      .then(user => {
-        return user
+      .then(result => {
+        return result
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
