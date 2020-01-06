@@ -66,7 +66,7 @@ exports.putUpdateUser = (req, res, next) => {
 		.then((user) => {
 			res.status(200).json(user);
 		})
-		.catch(err => {
+		.catch(() => {
 			const error = new Error('Error updating user');
 			error.statusCode = 422;
 			throw error;

@@ -45,7 +45,7 @@ class Thread {
       });
   }
 
-  static updateUser(id, thread) {
+  static updateThread(id, thread) {
     const o_id = new ObjectId(id);
     const date = new Date();
     db = getDb();

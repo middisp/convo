@@ -16,7 +16,9 @@ router.post('/add', urlencodedParser, [
 
 router.get('/:thread_id', urlencodedParser, controllers.getMessagesByThread);
 
-router.put('/update', controllers.putUpdateMessage);
+router.put('/update/:message_id', urlencodedParser, [
+  body('content').trim().notEmpty(),
+], controllers.putUpdateMessage);
 
 router.delete('/delete', controllers.deleteMessage);
 
