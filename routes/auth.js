@@ -1,4 +1,5 @@
 const express = require('express');
+const { body } = require('express-validator');
 const bodyParser = require('body-parser');
 
 const controllers = require('../controllers/auth');
@@ -6,9 +7,10 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const router = express.Router();
 
-router.get('/', controllers.getLogin);
-
-router.post('/', urlencodedParser, controllers.postLogin);
+router.post('/', urlencodedParser, [
+  body('username').trim().notEmpty(),
+  body('password').trim().notEmpty().isLength({ min: 5 })
+], controllers.postLogin);
 
 // router.post('/logout', urlencodedParser, controllers.postLogout);
 
