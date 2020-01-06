@@ -16,18 +16,18 @@ app.use(
   session({ secret: 'my secret', resave: false, saveUninitialized: false })
 );
 
+app.use('/login', authRoutes);
 app.use('/public', express.static('public'));
 app.use('/message', messageRoutes);
 app.use('/user', userRoutes);
 app.use('/thread', threadRoutes);
 
-app.use('/login', authRoutes);
 
-app.use('/', (req, res, next) => {
-  res.render('index', {
-    pageTitle: 'Welcome!'
-  })
-});
+// app.use('/', (req, res, next) => {
+//   res.render('index', {
+//     pageTitle: 'Welcome!'
+//   })
+// });
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
