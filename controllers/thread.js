@@ -6,15 +6,17 @@ const userMessages = require('../utils/userMessages');
 exports.postAddThread = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		console.log(errors);
-		const error = new Error(userMessages.generic.validationFailed);
-		error.statusCode = 422;
-		throw error;
+		return res.status(422).json({
+			message: 'Validation failed, entered data is incorrect.',
+			errors: errors.array()
+		});
 	}
 	const members = req.body.members;
 	const user_id = req.body.user_id;
+	const name = req.body.name;
+	const description = req.body.description;
 
-	const thread = new Thread(user_id, members);
+	const thread = new Thread(user_id, members, name, description);
 	thread.save()
 		.then(result => res.status(201).json(result))
 		.catch(err => {
@@ -41,10 +43,10 @@ exports.getThreads = (req, res, next) => {
 exports.putUpdateThread = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		console.log(errors);
-		const error = new Error(userMessages.generic.validationFailed);
-		error.statusCode = 422;
-		throw error;
+		return res.status(422).json({
+			message: 'Validation failed, entered data is incorrect.',
+			errors: errors.array()
+		});
 	}
 	const thread_id = req.body.message_id;
 

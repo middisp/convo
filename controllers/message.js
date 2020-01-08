@@ -6,9 +6,10 @@ const userMessages = require('../utils/userMessages');
 exports.postAddMessage = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		const error = new Error(userMessages.generic.validationFailed);
-		error.statusCode = 422;
-		throw error;
+		return res.status(422).json({
+			message: 'Validation failed, entered data is incorrect.',
+			errors: errors.array()
+		});
 	}
 	const content = req.body.content;
 	const user_id = req.body.user_id;
@@ -40,10 +41,10 @@ exports.getMessagesByThread = (req, res, next) => {
 exports.putUpdateMessage = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		console.log(errors);
-		const error = new Error(userMessages.generic.validationFailed);
-		error.statusCode = 422;
-		throw error;
+		return res.status(422).json({
+			message: 'Validation failed, entered data is incorrect.',
+			errors: errors.array()
+		});
 	}
 	const message_id = req.params.message_id;
 	const content = req.body.content;
