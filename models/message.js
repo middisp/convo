@@ -52,7 +52,7 @@ class Message {
     db = getDb();
 
     return db.collection(MESSAGE_COLLECTION)
-      .updateOne({ _id: o_id }, { $set: { ...message, meta: { modifiedAt: date } } })
+      .updateOne({ _id: o_id }, { $set: { ...message, edited: true, meta: { modifiedAt: date } } })
       .then(result => {
         return result
       }).catch(err => {

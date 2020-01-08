@@ -6,10 +6,12 @@ const { THREAD_COLLECTION } = require('../config');
 let db;
 
 class Thread {
-  constructor(user_id, members) {
+  constructor(user_id, members, name, description = '') {
     const date = new Date();
     const membersArray = members.split(',');
     const membersId = membersArray.map((member) => new ObjectId(member));
+    this.name = name;
+    this.description = description;
     this.user_id = new ObjectId(user_id);
     this.members = membersId;
     this.meta = {

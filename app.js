@@ -1,33 +1,33 @@
 const express = require('express');
-const session = require('express-session');
-
 const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const threadRoutes = require('./routes/thread');
 const mongoConnect = require('./utils/database').mongoConnect;
+const bodyParser = require('body-parser');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-app.use(
-  session({ secret: 'my secret', resave: false, saveUninitialized: false })
-);
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 app.use('/login', authRoutes);
 app.use('/public', express.static('public'));
 app.use('/message', messageRoutes);
 app.use('/user', userRoutes);
 app.use('/thread', threadRoutes);
-
-
-// app.use('/', (req, res, next) => {
-//   res.render('index', {
-//     pageTitle: 'Welcome!'
-//   })
-// });
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
