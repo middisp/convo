@@ -15,19 +15,17 @@ exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  exports.getUser = (req, res, next) => {
-    User.getUser(email)
-      .then(result => {
-        if (result.password === password) {
-          res.status(200).json(result);
-        } else {
-          res.status(401).json({ message: 'Incorrect username or passowrd', statusCode: 401 });
-        }
-      })
-      .catch(err => {
-        const error = new Error('Error logging in');
-        error.statusCode = 422;
-        throw error;
-      });
-  };
+  User.getUserByEmail(email)
+    .then(result => {
+      if (result.password === password) {
+        return res.status(200).json(result);
+      } else {
+        return res.status(401).json({ message: 'Incorrect username or passowrd', statusCode: 401 });
+      }
+    })
+    .catch(err => {
+      const error = new Error('User not found, please try again');
+      error.statusCode = 422;
+      next(error);
+    });
 };

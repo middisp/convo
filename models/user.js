@@ -45,6 +45,19 @@ class User {
       });
   }
 
+  static getUserByEmail(email) {
+    db = getDb();
+
+    return db.collection(USER_COLLECTION)
+      .findOne({ email })
+      .then(result => {
+        return result;
+      }).catch(err => {
+        console.log(`Error: ${err}`);
+        next(new Error(err));
+      });
+  }
+
   static fetchAll(channel_id) {
     db = getDb();
 
