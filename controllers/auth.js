@@ -16,17 +16,17 @@ exports.postLogin = (req, res, next) => {
 
   const email = req.body.email;
   const password = req.body.password;
-  const loadedUser = {};
+  let loadedUser = {};
 
   User.getUserByEmail(email)
-    .then(result => {
+    .then(user => {
       if (!user) {
         const error = new Error('User not found');
         error.statusCode = 401;
         throw error;
       }
       loadedUser = user;
-      return bcrypt.compare(password, result.password);
+      return bcrypt.compare(password, user.password);
     }).then(isEqual => {
       if (!isEqual) {
         const error = new Error(userMessages.generic.validationFailed);
@@ -36,7 +36,7 @@ exports.postLogin = (req, res, next) => {
 
       // JWT goes here
 
-      return res.status(200).json(result);
+      return res.status(200).json(loadedUser);
 
     })
     .catch(error => next(error))
