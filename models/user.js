@@ -12,6 +12,7 @@ class User {
     this.password = password;
     this.preferences = {};
     this.threads = [];
+    this.mates = [];
     this.meta = {
       createdAt: date,
       modifiedAt: date,
