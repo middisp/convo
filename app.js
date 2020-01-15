@@ -13,6 +13,8 @@ app.set('views', 'views');
 
 app.use(bodyParser.json());
 
+// JWT Middleware, look for header?
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(

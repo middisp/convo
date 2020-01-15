@@ -1,6 +1,7 @@
 const userMessages = {
   generic: {
-    validationFailed: 'Validation failed. Entered data is incorrect'
+    validationFailed: 'Validation failed. Entered data is incorrect',
+    notAuthenticated: 'Not authenticated'
   },
   postAddChannel: {
     success: 'Channel created!',

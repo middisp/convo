@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -36,8 +37,8 @@ exports.postLogin = (req, res, next) => {
       delete loadedUser.password;
       loadedUser._id = loadedUser._id.toString();
       // JWT goes here
-      return res.status(200).json(loadedUser);
-
+      const token = jwt.sign({ userId: loadedUser._id }, 'whyAreGiraffesConsideredTall', { expiresIn: '1hr' });
+      return res.status(200).json({ user: loadedUser, token });
     })
     .catch(error => next(error))
 };
