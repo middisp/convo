@@ -13,6 +13,8 @@ app.set('views', 'views');
 
 app.use(bodyParser.json());
 
+// JWT Middleware, look for header?
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -24,7 +26,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/login', authRoutes);
-app.use('/public', express.static('public'));
 app.use('/message', messageRoutes);
 app.use('/user', userRoutes);
 app.use('/thread', threadRoutes);
@@ -32,7 +33,7 @@ app.use('/thread', threadRoutes);
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
   const message = error.message;
-  res.status(statusCode).json({ message });
+  res.status(statusCode).json({ message, statusCode });
 })
 
 mongoConnect(() => {

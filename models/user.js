@@ -12,6 +12,7 @@ class User {
     this.password = password;
     this.preferences = {};
     this.threads = [];
+    this.mates = [];
     this.meta = {
       createdAt: date,
       modifiedAt: date,
@@ -39,6 +40,19 @@ class User {
       .findOne({ _id: o_id })
       .then(result => {
         return result.ops[0];
+      }).catch(err => {
+        console.log(`Error: ${err}`);
+        next(new Error(err));
+      });
+  }
+
+  static getUserByEmail(email) {
+    db = getDb();
+
+    return db.collection(USER_COLLECTION)
+      .findOne({ email })
+      .then(result => {
+        return result;
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));

@@ -1,13 +1,12 @@
 const express = require('express');
 const { body } = require('express-validator');
-const bodyParser = require('body-parser');
 
 const controllers = require('../controllers/auth');
 
 const router = express.Router();
 
 router.post('/', [
-  body('username').trim().notEmpty(),
+  body('email').trim().isEmail().notEmpty().normalizeEmail(),
   body('password').trim().notEmpty().isLength({ min: 5 })
 ], controllers.postLogin);
 
