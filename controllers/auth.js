@@ -33,9 +33,9 @@ exports.postLogin = (req, res, next) => {
         error.statusCode = 401;
         throw error;
       }
-
+      delete loadedUser.password;
+      loadedUser._id = loadedUser._id.toString();
       // JWT goes here
-
       return res.status(200).json(loadedUser);
 
     })
