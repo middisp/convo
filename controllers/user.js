@@ -6,7 +6,6 @@ const User = require('../models/user');
 const userMessages = require('../utils/userMessages');
 
 exports.postAddUser = (req, res, next) => {
-	console.log(req.body)
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		const error = new Error(userMessages.generic.validationFailed)

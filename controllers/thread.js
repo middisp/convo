@@ -27,10 +27,9 @@ exports.postAddThread = (req, res, next) => {
 }
 
 exports.getThreads = (req, res, next) => {
-	const sender_id = req.body.sender_id;
-	const recipient_id = req.params.recipient_id;
+	const user_id = req.params.user_id;
 
-	Message.fetchAll(sender_id, recipient_id)
+	Thread.fetchAll(user_id)
 		.then(result => {
 			res.status(200).json(result)
 		})
