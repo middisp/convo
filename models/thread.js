@@ -8,12 +8,10 @@ let db;
 class Thread {
   constructor(user_id, members, name, description = '') {
     const date = new Date();
-    const membersArray = members.split(',');
-    const membersId = membersArray.map((member) => new ObjectId(member));
     this.name = name;
     this.description = description;
     this.user_id = new ObjectId(user_id);
-    this.members = membersId;
+    this.members = members;
     this.meta = {
       createdAt: date,
       modifiedAt: date
@@ -36,11 +34,17 @@ class Thread {
   static fetchAll(user_id) {
     db = getDb();
 
+    // Need to fetch all, then loop throgh results.members for matching user_id.
+    // Spunk out on to page.
     return db.collection(THREAD_COLLECTION)
-      .find({ user_id })
+      .find({})
       .toArray()
       .then(result => {
-        return result;
+        return result.map(res => {
+          if (res.members.includes(new ObjectId(user_id))) {
+            return res;
+          }
+        });
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
