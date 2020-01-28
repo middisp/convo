@@ -57,21 +57,19 @@ exports.getAllUsers = (req, res, next) => {
 exports.putUpdateUser = (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(422).json({
-			message: userMessages.generic.validationFailed,
-			errors: errors.array()
-		});
+		const error = new Error(userMessages.generic.validationFailed)
+		error.statusCode = 422;
+		throw error;
 	}
 	const id = req.params.user_id;
-	const user = req.body.user;
+	const user = req.body;
+
+	console.log(req.body);
 
 	User.updateUser(id, user)
+		.then(() => User.getUser(id))
 		.then((user) => {
 			res.status(200).json(user);
 		})
-		.catch(() => {
-			const error = new Error('Error updating user');
-			error.statusCode = 422;
-			throw error;
-		});
+		.catch(error => next(error));
 }
