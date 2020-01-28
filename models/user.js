@@ -39,7 +39,7 @@ class User {
     return db.collection(USER_COLLECTION)
       .findOne({ _id: o_id })
       .then(result => {
-        return result.ops[0];
+        return result;
       }).catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
@@ -78,8 +78,13 @@ class User {
     const date = new Date();
     db = getDb();
 
+    console.log('user', user);
+
+    user.meta.modifiedAt = date;
+    delete user._id;
+
     return db.collection(USER_COLLECTION)
-      .updateOne({ _id: o_id }, { $set: { ...user, meta: { modifiedAt: date } } })
+      .updateOne({ _id: o_id }, { $set: user })
       .then(result => {
         return result
       }).catch(err => {
