@@ -1,0 +1,83 @@
+const mockData = [{
+  "firstName": "Lock",
+  "lastName": "Ostler",
+  "email": "lostler0@latimes.com"
+}, {
+  "firstName": "Vera",
+  "lastName": "Allmond",
+  "email": "vallmond1@fda.gov"
+}, {
+  "firstName": "Aggy",
+  "lastName": "Stanyland",
+  "email": "astanyland2@webmd.com"
+}, {
+  "firstName": "Royce",
+  "lastName": "Josskovitz",
+  "email": "rjosskovitz3@ocn.ne.jp"
+}, {
+  "firstName": "Violette",
+  "lastName": "Sawford",
+  "email": "vsawford4@engadget.com"
+}, {
+  "firstName": "Aimee",
+  "lastName": "Brisseau",
+  "email": "abrisseau5@mozilla.org"
+}, {
+  "firstName": "Ollie",
+  "lastName": "Works",
+  "email": "oworks6@nature.com"
+}, {
+  "firstName": "Nari",
+  "lastName": "De Minico",
+  "email": "ndeminico7@arizona.edu"
+}, {
+  "firstName": "Fionna",
+  "lastName": "Dole",
+  "email": "fdole8@virginia.edu"
+}, {
+  "firstName": "Nefen",
+  "lastName": "Fisbburne",
+  "email": "nfisbburne9@kickstarter.com"
+}, {
+  "firstName": "Eilis",
+  "lastName": "Dron",
+  "email": "edrona@hexun.com"
+}, {
+  "firstName": "Viviyan",
+  "lastName": "Curley",
+  "email": "vcurleyb@facebook.com"
+}, {
+  "firstName": "Cathy",
+  "lastName": "Chrishop",
+  "email": "cchrishopc@twitter.com"
+}, {
+  "firstName": "Cosimo",
+  "lastName": "Childerhouse",
+  "email": "cchilderhoused@fda.gov"
+}, {
+  "firstName": "Oswell",
+  "lastName": "Nigh",
+  "email": "onighe@homestead.com"
+}, {
+  "firstName": "Anne",
+  "lastName": "Aggus",
+  "email": "aaggusf@ftc.gov"
+}, {
+  "firstName": "Ave",
+  "lastName": "Derycot",
+  "email": "aderycotg@cbc.ca"
+}, {
+  "firstName": "Bambie",
+  "lastName": "Braunroth",
+  "email": "bbraunrothh@paypal.com"
+}, {
+  "firstName": "Mufinella",
+  "lastName": "Laugharne",
+  "email": "mlaugharnei@hhs.gov"
+}, {
+  "firstName": "Edythe",
+  "lastName": "Cressor",
+  "email": "ecressorj@storify.com"
+}];
+
+module.exports = mockData;

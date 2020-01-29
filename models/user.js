@@ -5,10 +5,14 @@ const { USER_COLLECTION } = require('../config');
 let db;
 
 class User {
-  constructor(name, email, password) {
+  constructor(firstName, lastName, email, password) {
     const date = new Date();
-    this.name = name;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.displayName = '';
     this.email = email;
+    this.avatar = ''; // Blob storage URL, use id as file name.
+    this.qr = ''; // Need to generate this.
     this.password = password;
     this.preferences = {};
     this.threads = [];
@@ -77,8 +81,6 @@ class User {
     const o_id = new ObjectId(id);
     const date = new Date();
     db = getDb();
-
-    console.log('user', user);
 
     user.meta.modifiedAt = date;
     delete user._id;
