@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 const userMessages = require('../utils/userMessages');
+const mockData = require('../utils/MOCK_DATA');
 
 exports.postAddUser = (req, res, next) => {
 	const errors = validationResult(req);
@@ -72,4 +73,26 @@ exports.putUpdateUser = (req, res, next) => {
 			res.status(200).json(user);
 		})
 		.catch(error => next(error));
+}
+
+exports.postAddTestData = (req, res, next) => {
+
+	mockData.map(user => {
+		const firstName = user.firstName;
+		const lastName = user.lastName;
+		const email = user.email;
+		const password = 'password';
+
+		bcrypt.hash(password, 12)
+			.then(hashedPassword => {
+				const user = new User(firstName, lastName, email, hashedPassword);
+				return user.save();
+			})
+			.then(() => {
+				console.log('done');
+			})
+			.catch((error) => next(error));
+	});
+
+	res.status(200).json({ message: 'done' });
 }

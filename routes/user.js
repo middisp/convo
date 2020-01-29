@@ -9,11 +9,14 @@ const router = express.Router();
 router.get('/:id', isAuth, controllers.getUser);
 
 router.post('/add', [
-  body('name').trim().notEmpty().isString(),
+  body('firstName').trim().notEmpty().isString(),
+  body('lastName').trim().notEmpty().isString(),
   body('email').trim().notEmpty().isEmail(),
   body('password').trim().notEmpty().isLength({ min: 5 })
 ], controllers.postAddUser);
 
 router.put('/update/:user_id', isAuth, controllers.putUpdateUser);
+
+// router.post('/addTestData', controllers.postAddTestData);
 
 module.exports = router;

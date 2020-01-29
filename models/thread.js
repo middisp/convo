@@ -6,13 +6,17 @@ const { THREAD_COLLECTION } = require('../config');
 let db;
 
 class Thread {
-  constructor(user_id, members, name, description = '') {
+  constructor(user_id, members = [], name, description = '') {
     const date = new Date();
+    const o_id = new ObjectId(user_id);
+
     this.name = name;
     this.description = description;
-    this.user_id = new ObjectId(user_id);
+    this.user_id = o_id;
     this.members = members;
+    this.threadImage = '';
     this.meta = {
+      creadtedBy: o_id,
       createdAt: date,
       modifiedAt: date
     }
@@ -56,8 +60,10 @@ class Thread {
     const date = new Date();
     db = getDb();
 
+    thread.meta.modifiedAt = date;
+
     return db.collection(THREAD_COLLECTION)
-      .updateOne({ _id: o_id }, { $set: { ...thread, meta: { modifiedAt: date } } })
+      .updateOne({ _id: o_id }, { $set: thread })
       .then(result => {
         return result
       }).catch(err => {
