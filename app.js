@@ -37,7 +37,7 @@ app.use((error, req, res, next) => {
 })
 
 mongoConnect(() => {
-  app.listen(3000, e => {
+  app.listen(3001, e => {
     if (e) { throw e }
     console.log('Server running on port 3000');
   });
