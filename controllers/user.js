@@ -14,13 +14,14 @@ exports.postAddUser = (req, res, next) => {
 		throw error;
 	}
 
-	const name = req.body.name;
+	const firstName = req.body.firstName;
+	const lastName = req.body.lastName;
 	const email = req.body.email;
 	let password = req.body.password;
 
 	bcrypt.hash(password, 12)
 		.then(hashedPassword => {
-			const user = new User(name, email, hashedPassword);
+			const user = new User(firstName, lastName, email, hashedPassword);
 			return user.save();
 		})
 		.then(result => {
@@ -64,8 +65,6 @@ exports.putUpdateUser = (req, res, next) => {
 	}
 	const id = req.params.user_id;
 	const user = req.body;
-
-	console.log(req.body);
 
 	User.updateUser(id, user)
 		.then(() => User.getUser(id))
