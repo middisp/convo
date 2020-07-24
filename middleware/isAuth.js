@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const JWT_SECRET = require('../config');
 const userMessage = require('../utils/userMessages');
 
 module.exports = (req, res, next) => {
@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
   let decodeToken
 
   try {
-    decodeToken = jwt.verify(token, 'whyAreGiraffesConsideredTall')
+    decodeToken = jwt.verify(token, JWT_SECRET)
   } catch (error) {
     error.statusCode = 500;
     throw error;

@@ -22,7 +22,7 @@ exports.postLogin = (req, res, next) => {
   User.getUserByEmail(email)
     .then(user => {
       if (!user) {
-        const error = new Error('User not found');
+        const error = new Error(userMessages.generic.notAuthenticated);
         error.statusCode = 401;
         throw error;
       }
@@ -30,7 +30,7 @@ exports.postLogin = (req, res, next) => {
       return bcrypt.compare(password, user.password);
     }).then(isEqual => {
       if (!isEqual) {
-        const error = new Error(userMessages.generic.validationFailed);
+        const error = new Error(userMessages.generic.notAuthenticated);
         error.statusCode = 401;
         throw error;
       }
