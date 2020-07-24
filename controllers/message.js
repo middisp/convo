@@ -15,6 +15,8 @@ exports.postAddMessage = (req, res, next) => {
 	const user_id = req.body.user_id;
 	const thread_id = req.body.thread_id;
 
+	// Hash message here! - const hashedMessage = bcrypt.hash(content, 12);
+
 	const message = new Message(content, user_id, thread_id);
 	message.save()
 		.then(result => res.status(201).json(result))
