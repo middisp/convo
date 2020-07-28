@@ -43,17 +43,20 @@ exports.getUser = (req, res, next) => {
 		});
 };
 
-exports.getAllUsers = (req, res, next) => {
-	const channel_id = req.params.channel_id;
+exports.postAllUsers = (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		const error = new Error(userMessages.generic.validationFailed)
+		error.statusCode = 422;
+		throw error;
+	}
+	const email = req.body.email;
 
-	User.fetchAll(channel_id)
+	User.getUserByEmail(email)
 		.then(users => {
 			res.status(200).json(users)
 		})
-		.catch(err => {
-			const error = new Error('Error fetching users');
-			throw error;
-		});
+		.catch((error) => next(error));
 };
 
 exports.putUpdateUser = (req, res, next) => {
