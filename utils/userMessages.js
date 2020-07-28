@@ -4,11 +4,11 @@ const userMessages = {
     notAuthenticated: 'Not authenticated'
   },
   postAddChannel: {
-    success: 'Channel created!',
+    success: 'Thread created!',
     error: 'Server error, please try again',
     emptyFields: 'Provide a name and menbers',
-    nameMissing: 'Provide a Channel name',
-    membersMissing: 'Provide at least one member for your Channel'
+    nameMissing: 'Provide a Thread name',
+    membersMissing: 'Provide at least one member for your Thread'
   }
 };
 

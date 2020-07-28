@@ -8,6 +8,10 @@ const router = express.Router();
 
 router.get('/:id', isAuth, controllers.getUser);
 
+router.post('/find', isAuth, [
+  body('email').trim().notEmpty().isEmail()
+], controllers.postAllUsers);
+
 router.post('/add', [
   body('firstName').trim().notEmpty().isString(),
   body('lastName').trim().notEmpty().isString(),

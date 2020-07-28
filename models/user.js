@@ -42,9 +42,8 @@ class User {
 
     return db.collection(USER_COLLECTION)
       .findOne({ _id: o_id })
-      .then(result => {
-        return result;
-      }).catch(err => {
+      .then(result => result)
+      .catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
       });
@@ -55,9 +54,8 @@ class User {
 
     return db.collection(USER_COLLECTION)
       .findOne({ email })
-      .then(result => {
-        return result;
-      }).catch(err => {
+      .then(result => result)
+      .catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
       });
@@ -69,9 +67,8 @@ class User {
     return db.collection(USER_COLLECTION)
       .find({ channel_id: channel_id })
       .toArray()
-      .then(result => {
-        return result.ops;
-      }).catch(err => {
+      .then(result => result)
+      .catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
       });
@@ -87,9 +84,8 @@ class User {
 
     return db.collection(USER_COLLECTION)
       .updateOne({ _id: o_id }, { $set: user })
-      .then(result => {
-        return result
-      }).catch(err => {
+      .then(result => result)
+      .catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
       })

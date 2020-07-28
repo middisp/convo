@@ -12,10 +12,10 @@ module.exports = (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1];
-  let decodeToken
+  let decodeToken;
 
   try {
-    decodeToken = jwt.verify(token, JWT_SECRET)
+    decodeToken = jwt.verify(token, 'whyAreGiraffesConsideredTall')
   } catch (error) {
     error.statusCode = 500;
     throw error;
