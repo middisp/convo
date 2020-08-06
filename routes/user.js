@@ -21,6 +21,8 @@ router.post('/add', [
 
 router.put('/update/:user_id', isAuth, controllers.putUpdateUser);
 
+router.put('/mateRequest/:user_id', isAuth, controllers.putUpdateMateRequest);
+
 // router.post('/addTestData', controllers.postAddTestData);
 
 module.exports = router;

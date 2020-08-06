@@ -1,6 +1,7 @@
 const ObjectId = require('mongodb').ObjectId;
 const getDb = require('../utils/database').getDb;
 const { USER_COLLECTION } = require('../config');
+const { response } = require('express');
 
 let db;
 
@@ -79,12 +80,17 @@ class User {
     const date = new Date();
     db = getDb();
 
-    user.meta.modifiedAt = date;
     delete user._id;
 
+    user.meta.modifiedAt = date;
+
     return db.collection(USER_COLLECTION)
-      .updateOne({ _id: o_id }, { $set: user })
-      .then(result => result)
+      .findOneAndUpdate({ _id: o_id }, { $set: user }, { returnOriginal: false })
+      .then(result => {
+        const user = result.value;
+        delete user.password;
+        return user;
+      })
       .catch(err => {
         console.log(`Error: ${err}`);
         next(new Error(err));
