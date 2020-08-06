@@ -37,10 +37,7 @@ exports.getUser = (req, res, next) => {
 		.then(result => {
 			res.status(200).json(result);
 		})
-		.catch(err => {
-			const error = new Error('Error fetching user');
-			throw error;
-		});
+		.catch((error) => next(error));
 };
 
 exports.postAllUsers = (req, res, next) => {
@@ -53,8 +50,9 @@ exports.postAllUsers = (req, res, next) => {
 	const email = req.body.email;
 
 	User.getUserByEmail(email)
-		.then(users => {
-			res.status(200).json(users)
+		.then(user => {
+			delete user.password;
+			res.status(200).json(user)
 		})
 		.catch((error) => next(error));
 };
@@ -70,9 +68,44 @@ exports.putUpdateUser = (req, res, next) => {
 	const user = req.body;
 
 	User.updateUser(id, user)
-		.then(() => User.getUser(id))
-		.then((user) => {
+		.then(user => {
+			delete user.password;
 			res.status(200).json(user);
+		})
+		.catch(error => next(error));
+}
+
+exports.putUpdateMateRequest = (req, res, next) => {
+	const id = req.params.user_id;
+	const friendRequest = req.body; // {id: xxx, status: ["declined" | "accepted"]}
+
+	const updateFriendData = (user, requestId) => {
+		const mates = user.mates;
+		const now = new Date();
+		// loop mates - match $id to mates[i].id
+		const index = mates.findIndex(({ _id }) => _id === requestId);
+		mates[index].status = friendRequest.status;
+		mates[index].modifiedAt = now;
+		return user
+	}
+
+	let updatedUser;
+	User.getUser(id)
+		.then(user => {
+			// get mates.
+			return User.updateUser(id, updateFriendData(user, friendRequest._id));
+		})
+		.then((user) => {
+			updatedUser = user;
+			return User.getUser(friendRequest._id);
+		})
+		.then(user => {
+			// get mates.
+			return User.updateUser(friendRequest._id, updateFriendData(user, id));
+		})
+		.then(() => {
+			console.log(updatedUser);
+			res.status(200).json(updatedUser);
 		})
 		.catch(error => next(error));
 }
